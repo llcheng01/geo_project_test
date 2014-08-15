@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  zcta: 1
+  region: 
+
+two:
+  zcta: 1
+  region: 
