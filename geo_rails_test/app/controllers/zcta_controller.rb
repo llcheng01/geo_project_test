@@ -25,7 +25,7 @@ class ZctaController < ApplicationController
             hash1 = {}
             unless region.nil?
               # polygon_hash = JSON.parse(region["region"])
-                polygon_hash = RGeo::GeoJSON.encode(region["region"])
+                polygon_hash = RGeo::GeoJSON.encode(region.reg_geographic)
               hash1 = {
                         :id      => region["id"],
                         :name    => region["zcta"],

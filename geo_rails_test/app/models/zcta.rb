@@ -7,7 +7,24 @@ class Zcta < ActiveRecord::Base
     EWKB = RGeo::WKRep::WKBGenerator.new(:type_format => :ewkb,
             :emit_ewkb_srid => true, :hex_format => true)
 
-    
+    # Interact in projected coordinates
+    def reg_projected
+        self.region
+    end
+
+    def reg_projected=(value)
+        self.region = value
+    end
+
+    # To use geographic (lat/lon) coordinates, 
+    # convert them using the wrapper factory
+    def reg_geographic
+        FACTORY.unproject(self.region)
+    end
+
+    def reg_geographic=(value)
+        self.region = FACTORY.project(value)
+    end
 
     def self.containing_latlon(lat, lon)
         ewkb = EWKB.generate(FACTORY.point(lon, lat).projection)
