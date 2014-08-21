@@ -11,6 +11,10 @@ gem 'rgeo'
 gem 'rgeo-shapefile'
 gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
+gem 'rgeo-geojson'
+
+# leaflet
+gem 'leaflet-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

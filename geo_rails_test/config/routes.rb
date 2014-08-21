@@ -1,6 +1,10 @@
-GeoRailsTest::Application.routes.draw do
+GeoRailsTest::Application.routes.draw do 
     # resources :zcta, :only => [:lookup]
     get "zcta/lookup"
+    get "zcta/getPolygon"
+
+    resources :map
+    root to: 'map#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
