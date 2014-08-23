@@ -11,11 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140814173329) do
+ActiveRecord::Schema.define(:version => 20140822012826) do
+
+  create_table "locations", :force => true do |t|
+    t.string  "name"
+    t.string  "slug"
+    t.spatial "region",     :limit => {:srid=>3785, :type=>"polygon"}
+    t.float   "center_lat"
+    t.float   "center_lng"
+  end
+
+  add_index "locations", ["region"], :name => "index_locations_on_region", :spatial => true
 
   create_table "zcta", :force => true do |t|
     t.integer "zcta"
-    t.spatial "region", :limit => {:srid=>3785, :type=>"polygon"}
+    t.spatial "region",     :limit => {:srid=>3785, :type=>"polygon"}
+    t.float   "center_lat"
+    t.float   "center_lng"
   end
 
   add_index "zcta", ["region"], :name => "index_zcta_on_region", :spatial => true
