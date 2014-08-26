@@ -34,14 +34,23 @@ module LoadCenters
 
     def self.link_location_with_zip
         count = 0
-        zips = []
+        linked = {}
         Location.all.each do |loc|
+            puts "Record# #{count};"
+            zips =[]
             wkt_point = "SRID=3785;POINT(#{loc.center_lng} #{loc.center_lat})"
             puts wkt_point
-            zcta = Zcta.containing_wktpoint(wkt_point)
-            puts "11: #{zcta.zcta}"
-            zips << zcta["zcta"]
-            puts "Record# #{count};"
+            zctas = Zcta.containing_wktpoint(wkt_point)
+            zctas.each do |z|
+                linked[z.zcta] = loc.name
+                zips << linked
+                z.locations << loc
+                z.save!
+            end
+            output = zctas.empty? ? "No intersect" : "zip: #{zctas.first.zcta}"
+            puts output
+            # zips << zcta[0]["zcta"] unless zcta.empty?
+            # linked[loc.slug] = zips 
             puts "#{loc.slug} has #{zips.inspect}"
             count += 1
         end

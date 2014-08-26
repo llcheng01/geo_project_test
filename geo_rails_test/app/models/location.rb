@@ -1,6 +1,9 @@
 class Location < ActiveRecord::Base
-  attr_accessible :name, :region, :slug
-    FACTORY = RGeo::Geographic.simple_mercator_factory
+  attr_accessible :name, :region, :slugA
+  has_many :postal_areas
+  has_many :zctas, :through => :postal_areas
+
+  FACTORY = RGeo::Geographic.simple_mercator_factory
     set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
 
     # Generator for POSTGIS's native language

@@ -30,6 +30,8 @@ class ZctaController < ApplicationController
                         :id      => region["id"],
                         :name    => region["zcta"],
                         :polygon => polygon_hash,
+                        :center_lat => region["center_lat"],
+                        :center_lng => region["center_lng"],
                         :status  => 200
                       }
               { region["zcta"] => hash1 }

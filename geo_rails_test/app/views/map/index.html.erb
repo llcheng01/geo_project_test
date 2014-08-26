@@ -1,15 +1,43 @@
 <div id="container">
-    <%= 
-        map(:center => {
-        :latlng => [34.0522300, -118.2436800],
-        :zoom => 12
-    },
-        :markers => [
-            {
-                :latlng => [34.0522300, -118.2436800]
-        }
-    ]
-    )
-    %>
+    <div id="map"></div>
 </div>
-<input id="geo" type="hidden" value=""/>
+<input id="geo" type="hidden" value="whatever"/>
+    <%= javascript_tag do %>
+        $(function(){
+
+            
+                $.ajax({
+                type: "GET",
+                url: "/zcta/getPolygon",
+                data: {zip: 32703},
+                success:function (data) {
+                    json_geo = JSON.stringify(data['32703'].polygon)
+                    $('input#geo').val(json_geo);
+                    var map = L.map('map').setView([28.60849, -81.529538],11);
+
+                    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                        id: 'examples.map-i86knfo3'
+                        }).addTo(map);
+
+                        L.marker([28.60849, -81.529538]).addTo(map).bindPopup("<b>Hello world!</b><br/> I am a popup.").openPopup();
+                        var geo  = JSON.parse(json_geo).coordinates[0];
+                        console.log(geo);
+                        var polygon = L.polygon(geo).addTo(map);
+                        console.log(polygon);
+                        polygon.bindPopup("I am a polygon.");
+                    return false;
+                },
+                error: function(){
+                    return false;
+                }
+            });
+
+
+                var geo_val = $('input#geo').val();
+                console.log("Value: " + geo_val);
+        });
+    <% end %>

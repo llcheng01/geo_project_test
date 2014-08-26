@@ -1,5 +1,8 @@
 class Zcta < ActiveRecord::Base
-    attr_accessor :region, :zcta
+    attr_accessible :region, :zcta
+    has_many :postal_areas
+    has_many :locations, :through => :postal_areas
+    
     FACTORY = RGeo::Geographic.simple_mercator_factory
     set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
 

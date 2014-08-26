@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  location_id: 1
+  zcta_id: 1
+  created_da: 2014-08-25 16:18:57
+
+two:
+  location_id: 1
+  zcta_id: 1
+  created_da: 2014-08-25 16:18:57
